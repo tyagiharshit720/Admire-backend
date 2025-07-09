@@ -1,3 +1,3 @@
-export const blog=async (req,res)=>{
+export const getAllBlogs=async (req,res)=>{
     // Geting all the blogs from the database
 }
