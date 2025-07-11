@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ENV } from './ENV.js';
 
+
 const connectDB = async () => {
   try {
     await mongoose.connect(ENV.MONGO_URI);
@@ -11,3 +12,4 @@ const connectDB = async () => {
   }
 };
 export default connectDB;
+

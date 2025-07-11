@@ -1,7 +1,12 @@
 import express from 'express';
-import { destination, itinerary } from '../controller/destination.controller.js';
+import {itineraries} from '../controller/destination.controller.js';
 
-const routes = express.Router();
+const itinerariesRoute=express.Router();
+itinerariesRoute.get('/itineraries', itineraries);
 
-routes.get('/:type', destination);
-routes.get('/trending-destinatiojn/:place', itinerary);
+
+// routes.get('/:type',destination);
+// routes.get('/trending-destinatiojn/:place',itinerary);
+
+export default itinerariesRoute;
+
