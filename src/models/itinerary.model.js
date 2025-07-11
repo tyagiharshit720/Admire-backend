@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Sub-schema for hotel details
 const hotelDetailSchema = new mongoose.Schema(
@@ -35,7 +35,7 @@ const itinerarySchema = new mongoose.Schema(
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User", // assuming a User model exists
+      ref: 'User', // assuming a User model exists
     },
 
     title: { type: String, required: true },
@@ -45,14 +45,14 @@ const itinerarySchema = new mongoose.Schema(
 
     itinerary_visibility: {
       type: String,
-      enum: ["public", "private", "draft"],
-      default: "public",
+      enum: ['public', 'private', 'draft'],
+      default: 'public',
     },
 
     itinerary_type: {
       type: String,
-      enum: ["fixed", "flexible"],
-      default: "flexible",
+      enum: ['fixed', 'flexible'],
+      default: 'flexible',
     },
 
     duration: {
@@ -105,4 +105,4 @@ const itinerarySchema = new mongoose.Schema(
   { timestamps: false } // set to true if you want Mongoose to auto-manage timestamps
 );
 
-export default mongoose.model("ItineraryMain", itinerarySchema);
+export default mongoose.model('ItineraryMain', itinerarySchema);
