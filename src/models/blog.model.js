@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const blogSchema = new mongoose.Schema({
   id: Number,
@@ -8,7 +8,7 @@ const blogSchema = new mongoose.Schema({
   blog_description: String,
   blog_author_name: { type: String, default: null },
   blog_category: String,
-  blog_visibility: { type: String, default: "public" },
+  blog_visibility: { type: String, default: 'public' },
   blog_content: String,
   blog_image: String,
   blog_image_alt_text: String,
@@ -20,4 +20,4 @@ const blogSchema = new mongoose.Schema({
   updated_at: { type: Date, default: null },
 });
 
-export default mongoose.model("Blog", blogSchema);
+export default mongoose.model('Blog', blogSchema);
