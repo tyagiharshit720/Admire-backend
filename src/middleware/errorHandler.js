@@ -1,9 +1,9 @@
-export const globalErrorHandler = (err, res) => {
+export const globalErrorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const status = err.status || 'error';
+  const message = err.message || 'Something went wrong!';
 
   res.status(statusCode).json({
-    status: status,
-    message: err.message || 'Something went wrong!',
+    success: false,
+    message,
   });
 };
