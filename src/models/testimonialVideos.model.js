@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-// models/videoTestimonial.model.js
-
 const videoTestimonialSchema = new mongoose.Schema(
   {
     video_url: {
