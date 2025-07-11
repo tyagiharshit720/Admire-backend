@@ -1,3 +1,4 @@
+
 import usePrams from 'use-params';
 
 export const destination=async(req, res) => {
@@ -7,3 +8,4 @@ export const itinerary=async(req,res)=>{
     const { place } = usePrams(req);
      
 }
+
