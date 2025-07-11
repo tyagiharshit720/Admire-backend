@@ -1,5 +1,6 @@
-import {body} from "express-validator";
+import { body } from 'express-validator';
 export const LeadsValidator = [
+
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Valid email is required'),
     body('phone').notEmpty().withMessage('Mobile Number is required'),
@@ -9,3 +10,4 @@ export const LeadsValidator = [
     // body('subject').isLength({min:3}).withMessage('Subject must be at least 3 characters long'),
     body('destination').notEmpty().withMessage('Destination is required'),
 ]
+

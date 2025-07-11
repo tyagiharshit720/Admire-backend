@@ -9,3 +9,4 @@ itinerariesRoute.get('/itineraries', itineraries);
 // routes.get('/trending-destinatiojn/:place',itinerary);
 
 export default itinerariesRoute;
+

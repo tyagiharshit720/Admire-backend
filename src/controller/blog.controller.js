@@ -1,4 +1,5 @@
 
+
 import blogModel from "../models/blog.model.js";
 export const blog = async (req, res) => {
   try {
@@ -9,4 +10,5 @@ export const blog = async (req, res) => {
     console.error("Error fetching blogs:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
+
 };
