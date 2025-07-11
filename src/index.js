@@ -21,4 +21,3 @@ app.use(globalErrorHandler);
 app.listen(ENV.PORT, () => {
   console.log('Server is start ✅');
 });
-

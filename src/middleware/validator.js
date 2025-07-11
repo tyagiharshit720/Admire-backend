@@ -1,4 +1,3 @@
-
 import { validateResult } from './validateResult.js';
 
 export const validate = (req, res, next) => {

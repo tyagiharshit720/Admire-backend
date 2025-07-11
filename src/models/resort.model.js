@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const resortSchema = new Schema(
   {
@@ -55,8 +55,8 @@ const resortSchema = new Schema(
     },
     visibility: {
       type: String,
-      enum: ["public", "private"],
-      default: "public",
+      enum: ['public', 'private'],
+      default: 'public',
     },
     discount: {
       type: Number,
@@ -70,8 +70,8 @@ const resortSchema = new Schema(
     },
     availability_status: {
       type: String,
-      enum: ["Available", "Unavailable", "Booked"],
-      default: "Available",
+      enum: ['Available', 'Unavailable', 'Booked'],
+      default: 'Available',
     },
     activities: {
       type: [String],
@@ -96,4 +96,4 @@ const resortSchema = new Schema(
   }
 );
 
-export default mongoose.model("Resort", resortSchema);
+export default mongoose.model('Resort', resortSchema);
