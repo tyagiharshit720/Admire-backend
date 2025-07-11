@@ -8,9 +8,7 @@ import connectDB from './config/db.js';
 
 const app = express();
 app.use(express.json());
-
 connectDB();
-
 app.use('/api/v1/', leadsRoute);
 app.use('/api/v1/destination', itinerariesRoute);
 app.use('/api/v1/blog', blogRoute);
