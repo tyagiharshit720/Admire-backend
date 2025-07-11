@@ -6,9 +6,11 @@ import {
   subscribe,
   suggestionComplain,
 } from '../controller/leads.controller.js';
-
-import { LeadsValidator } from '../validate/leads.validate.js';
 import { validate } from '../middelware/validator.js';
+import {LeadsValidator} from "../validate/leads.validate.js"
+
+
+
 
 const router = express.Router();
 router.post('/planYourJourney', LeadsValidator, validate, planYourJourney);
