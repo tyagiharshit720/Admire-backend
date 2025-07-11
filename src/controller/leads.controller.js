@@ -2,11 +2,9 @@ import PlanYourJourney from '../models/planYourJuorney.model.js';
 import contactModel from '../models/contact.model.js';
 import subscribeModel from '../models/subscribe.model.js';
 
+// planYourJourney controller
 export const planYourJourney = async (req, res) => {
-  // console.log("test")
   const { name, email, phone, destination } = req.body;
-  // console.log(req.body.name);
-  // console.log(req.body)
 
   console.log(req.body);
   try {
@@ -55,6 +53,7 @@ export const planYourJourney = async (req, res) => {
   }
 };
 
+// conatct controller
 export const contact = async (req, res) => {
   const { name, email, subject, message } = req.body;
   // console.log(req.body)
@@ -110,10 +109,13 @@ export const contact = async (req, res) => {
   }
 };
 
+// subscribe controller
+
 export const subscribe = async (req, res) => {
   const { name, phone, email } = req.body;
   console.log(req.body);
   try {
+
     if (!name || !phone || !email) {
       return res.status(400).json({ msg: 'Please fill all the fields', success: false });
     }
@@ -146,9 +148,11 @@ export const subscribe = async (req, res) => {
   }
 };
 
+// suggestionComplain controller
 export const suggestionComplain = async (req, res) => {
   const { name, email, message } = req.body;
   try {
+
     if (!name || !email || !message) {
       return res.status(400).json({ msg: 'Please fill all the fields', success: false });
     }
