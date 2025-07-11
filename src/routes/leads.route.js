@@ -12,6 +12,7 @@ import {LeadsValidator} from "../validate/leads.validate.js"
 
 
 
+
 const router = express.Router();
 router.post("/planYourJourney", LeadsValidator, validate, planYourJourney);
 router.post("/contact", LeadsValidator, validate, contact);
