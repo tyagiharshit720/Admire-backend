@@ -5,5 +5,7 @@ export const validateResult = (req) => {
   if (!result.isEmpty()) {
     return result.array();
   }
+
+  
   return null;
 };
