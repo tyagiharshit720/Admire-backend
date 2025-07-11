@@ -1,7 +1,13 @@
 import express from "express";
+
+
+
 import { ENV } from "./config/ENV.js";
-import { globalErrorHandler } from "./config/errorHandler.js";
 import connectDB from "./config/db.js";
+
+
+import { globalErrorHandler } from "./middleware/errorHandler.js";
+
 
 
 // routes imports
@@ -16,9 +22,9 @@ app.use(express.json());
 connectDB();
 
 
-
+// use here routes
 app.use("/api/v1/",leadsRoute)
-app.use("/api/v1/blog",leadsRoute)
+app.use("/api/v1/blog",blogsRoute)
 
 
 // Global error handlerle
