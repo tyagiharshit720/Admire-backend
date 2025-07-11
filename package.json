@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +16,8 @@
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
     "mongoose": "^8.16.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
   }
 }
