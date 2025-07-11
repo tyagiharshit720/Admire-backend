@@ -115,7 +115,6 @@ export const subscribe = async (req, res) => {
   const { name, phone, email } = req.body;
   console.log(req.body);
   try {
-
     if (!name || !phone || !email) {
       return res.status(400).json({ msg: 'Please fill all the fields', success: false });
     }
@@ -152,7 +151,6 @@ export const subscribe = async (req, res) => {
 export const suggestionComplain = async (req, res) => {
   const { name, email, message } = req.body;
   try {
-
     if (!name || !email || !message) {
       return res.status(400).json({ msg: 'Please fill all the fields', success: false });
     }

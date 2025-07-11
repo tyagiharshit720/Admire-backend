@@ -3,7 +3,7 @@ import express from 'express';
 import { ENV } from './config/ENV.js';
 import connectDB from './config/db.js';
 
-import { globalErrorHandler } from './middleware/errorHandler.js';
+import { globalErrorHandler } from './middelware/errorHandler.js';
 
 // routes imports
 import leadsRoute from './routes/leads.route.js';
