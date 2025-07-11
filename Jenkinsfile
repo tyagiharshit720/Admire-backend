@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
+        stage('Pull Latest Code') {
             steps {
                 git url: 'https://github.com/admiregroup2025/Admire-Holidays-backend.git', branch: 'main'
             }
@@ -18,10 +18,9 @@ pipeline {
             }
         }
 
-        stage('Restart PM2') {
+        stage('Restart Backend with PM2') {
             steps {
-                sh 'pm2 delete admire-backend || true'
-                sh 'pm2 start src/index.js --name admire-backend'
+                sh 'pm2 restart admire-backend || pm2 start src/index.js --name admire-backend'
             }
         }
     }
