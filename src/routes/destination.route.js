@@ -1,10 +1,13 @@
 import express from 'express';
-import { itineraries } from '../controller/destination.controller.js';
+import { itineraries, trendingDestination, ourResorts, destinationIteneries } from '../controller/destination.controller.js';
 
-const itinerariesRoute = express.Router();
-itinerariesRoute.get('/itineraries', itineraries);
+const destinationRoute = express.Router();
+destinationRoute.get('/itineraries', itineraries);
+destinationRoute.get('/trending-destination', trendingDestination); 
+destinationRoute.get('/trending-destination/:place', destinationIteneries)
+destinationRoute.get('/resorts', ourResorts);
 
 // routes.get('/:type',destination);
 // routes.get('/trending-destinatiojn/:place',itinerary);
 
-export default itinerariesRoute;
+export default destinationRoute;
