@@ -9,6 +9,7 @@ import { globalErrorHandler } from './middleware/errorHandler.js';
 import leadsRoute from './routes/leads.route.js';
 import itinerariesRoute from './routes/destination.route.js';
 import blogRoute from './routes/blog.route.js';
+import testimonialRoute from './routes/testimonial.route.js';
 
 const app = express();
 app.use(express.json());
@@ -28,6 +29,7 @@ connectDB();
 app.use('/api/v1/', leadsRoute);
 app.use('/api/v1/destination', itinerariesRoute);
 app.use('/api/v1/blog', blogRoute);
+app.use('/api/v1/', testimonialRoute);
 
 // Global error handler
 app.use(globalErrorHandler);
