@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { ENV } from './config/ENV.js';
 import connectDB from './config/db.js';
+import cookieParser from 'cookie-parser';
 
 import { globalErrorHandler } from './middleware/errorHandler.js';
 
@@ -10,8 +11,10 @@ import leadsRoute from './routes/leads.route.js';
 import itinerariesRoute from './routes/destination.route.js';
 import blogRoute from './routes/blog.route.js';
 import testimonialRoute from './routes/testimonial.route.js';
+import userRouter from './routes/user.route.js';
 
 const app = express();
+app.use(cookieParser())
 app.use(express.json());
 
 const corsOption = {
@@ -30,6 +33,7 @@ app.use('/api/v1/', leadsRoute);
 app.use('/api/v1/destination', itinerariesRoute);
 app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
+app.use('/api/v1/user',userRouter)
 
 // Global error handler
 app.use(globalErrorHandler);
