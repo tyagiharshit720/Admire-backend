@@ -84,7 +84,7 @@ export const suggestionComplain = async (req, res) => {
   const { name, email, message } = req.body;
   try {
     const newSuggestionComplain = new suggestionComplainModel({
-      nema,
+      name,
       email,
       message,
     });

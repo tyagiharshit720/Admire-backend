@@ -1,22 +1,46 @@
-// import usePrams from "use-params";
 import itineraryModel from '../models/itinerary.model.js';
 import destinationDetailsAndImagesModel from '../models/destinationDetailsAndImage.model.js';
 import resortModel from '../models/resort.model.js';
+import destinationInternationalAndDomesticModel from '../models/destinationInternationAndDomestic.model.js';
 
-// itineraries contoller
-export const itineraries = async (req, res) => {
+export const internationalDestinations = async (req, res) => {
   try {
-    const trendingData = await itineraryModel.find({});
-
+    const internationalDestinations = await destinationInternationalAndDomesticModel.find({
+      domestic_or_international: 'international',
+    });
+    if (!internationalDestinations || internationalDestinations.length === 0) {
+      return res.status(404).json({ msg: 'No international destinations found', success: false });
+    }
     return res
       .status(200)
-      .json(trendingData, { msg: 'Itineraries fetched successfully', success: true });
+      .json(internationalDestinations, {
+        msg: 'International destinations fetched successfully',
+        success: true,
+      });
   } catch (error) {
-    console.error('Error fetching itineraries:', error);
+    console.error('Error fetching international destinations:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
+export const domesticDestinations = async (req, res) => {
+  try {
+    const domesticDestinations = await destinationInternationalAndDomesticModel.find({
+      domestic_or_international: 'domestic',
+    });
+    if (!domesticDestinations || domesticDestinations.length === 0) {
+      return res.status(404).json({ msg: 'No domestic destinations found', success: false });
+    }
+    return res
+      .status(200)
+      .json(domesticDestinations, {
+        msg: 'Domestic destinations fetched successfully',
+        success: true,
+      });
+  } catch (error) {
+    console.error('Error fetching domestic destinations:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 // trendingDestination controller
 export const trendingDestination = async (req, res) => {
   try {
