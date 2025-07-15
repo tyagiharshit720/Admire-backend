@@ -12,6 +12,7 @@ import itinerariesRoute from './routes/destination.route.js';
 import blogRoute from './routes/blog.route.js';
 import testimonialRoute from './routes/testimonial.route.js';
 import userRouter from './routes/user.route.js';
+// import adminRoute from './routes/adminUser.route.js';
 
 const app = express();
 app.use(cookieParser())
@@ -34,6 +35,7 @@ app.use('/api/v1/destination', itinerariesRoute);
 app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
 app.use('/api/v1/user',userRouter)
+// app.use('/admin',adminRoute)
 
 // Global error handler
 app.use(globalErrorHandler);

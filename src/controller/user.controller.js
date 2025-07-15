@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import userModel from '../models/user.model.js';
-import { generateToke } from '../utils.js';
+import { generateToken } from '../utils.js';
 
 export const sendOtp = async (req, res) => {
   try {
@@ -64,7 +64,7 @@ export const verifyOtp = async (req, res) => {
     user.otp_expiry = undefined;
     await user.save();
 
-    const token = generateToke(user._id);
+    const token = generateToken(user._id);
 
     res.cookie('token', token, {
       httpOnly: true,
