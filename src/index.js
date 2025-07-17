@@ -12,20 +12,25 @@ import itinerariesRoute from './routes/destination.route.js';
 import blogRoute from './routes/blog.route.js';
 import testimonialRoute from './routes/testimonial.route.js';
 import userRouter from './routes/user.route.js';
-// import adminRoute from './routes/adminUser.route.js';
+import adminRoute from './routes/adminUser.route.js';
 
 const app = express();
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 
 const corsOption = {
-  origin: ['http://www.admireholidays.com','https://www.admireholidays.com', 'http://localhost:5173'],
+  origin: [
+    'http://www.admireholidays.com',
+    'https://www.admireholidays.com',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
-app.use(cors(corsOption))
+app.use(cors(corsOption));
 
 connectDB();
 
@@ -34,8 +39,8 @@ app.use('/api/v1/', leadsRoute);
 app.use('/api/v1/destination', itinerariesRoute);
 app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
-app.use('/api/v1/user',userRouter)
-// app.use('/admin',adminRoute)
+app.use('/api/v1/user', userRouter);
+app.use('/admin',adminRoute)
 
 // Global error handler
 app.use(globalErrorHandler);
