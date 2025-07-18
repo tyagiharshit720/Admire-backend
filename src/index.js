@@ -23,7 +23,8 @@ const corsOption = {
     'http://www.admireholidays.com',
     'https://www.admireholidays.com',
     'http://localhost:5173',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://192.168.68.114:3000'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
