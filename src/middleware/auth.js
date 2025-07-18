@@ -7,7 +7,7 @@ export const auth = async (req, res, next) => {
     const token =
       req.cookies.token ||
       req.headers.authorization?.split(' ')[1];
-      console.log(token)
+
     if (!token) {
       return res.status(401).json({ msg: 'Unauthorized: No token', success: false });
     }
@@ -27,6 +27,5 @@ export const authorizeAdmin = (req, res, next) => {
   if (req.userRole !== 'admin') {
     return res.status(403).json({ msg: 'Access denied. Admins only.', success: false });
   }
-  
   next();
 };
