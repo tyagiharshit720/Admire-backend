@@ -8,6 +8,7 @@ import {
   AdminUserCreate,
   changePassword,
   userExistedInAdmin,
+  getMe,
 } from '../controller/admin/user.admin.controller.js';
 import { destination_Internation_Or_Domestic } from '../controller/admin/destination.admin.controller.js';
 const adminRoute = express.Router();
@@ -19,5 +20,6 @@ adminRoute.post('/image-Gallery', uploadMedia.array('image'), imageGallery);
 adminRoute.get('/destination/:type', destination_Internation_Or_Domestic);
 adminRoute.patch('/change-password', auth, changePassword);
 adminRoute.get('/get-admin-user',auth, authorizeAdmin, userExistedInAdmin);
+adminRoute.get('/me',auth,getMe)
 
 export default adminRoute;

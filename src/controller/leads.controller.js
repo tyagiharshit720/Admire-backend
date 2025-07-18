@@ -1,6 +1,7 @@
 import PlanYourJourney from '../models/planYourJuorney.model.js';
 import contactModel from '../models/contact.model.js';
 import subscribeModel from '../models/subscribe.model.js';
+import suggestionComplainModel from '../models/suggestionComplain.model.js';
 
 // planYourJourney controller
 export const planYourJourney = async (req, res) => {

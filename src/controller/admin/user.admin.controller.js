@@ -53,6 +53,8 @@ export const AdminUserVerify = async (req, res) => {
     return res.status(500).json({ msg: 'Server Pannel', success: false });
   }
 };
+
+// For Admin User Change Password
 export const changePassword = async (req, res) => {
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
@@ -128,3 +130,21 @@ export const userExistedInAdmin = async (req, res) => {
     return res.status(500).json({ msg: 'Server error', success: false });
   }
 };
+
+
+// create /me controlller
+export const getMe = async (req, res) => {
+  try {
+    const { userId, userRole } = req;
+
+    return res.status(200).json({
+      success: true,
+      userId,
+      role: userRole,
+      msg: 'User authenticated',
+    });
+  } catch (err) {
+    console.error('/me error:', err);
+    return res.status(500).json({ success: false, msg: 'Something went wrong' });
+  }
+} 

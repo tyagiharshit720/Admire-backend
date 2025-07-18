@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { ENV } from '../config/ENV.js';
 
 export const auth = async (req, res, next) => {
   try {
@@ -8,7 +9,7 @@ export const auth = async (req, res, next) => {
       return res.status(401).json({ msg: 'Unauthorized: No token', success: false });
     }
 
-    const authorized = jwt.verify(token, process.env.JWT_SECRET);
+    const authorized = jwt.verify(token, ENV.JWT_SECRET);
 
     // Attach user info to req
     req.userId = authorized.id;
