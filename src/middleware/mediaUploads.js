@@ -1,9 +1,10 @@
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { ENV } from '../config/ENV.js';
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
+  cloud_name: ENV.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API,
   api_secret: process.env.CLOUDINARY_SECRET,
 });

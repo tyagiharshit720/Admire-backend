@@ -1,18 +1,21 @@
 import jwt from 'jsonwebtoken';
+import { ENV } from '../config/ENV.js';
 
 export const auth = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    // Check token from either cookie or Authorization header
+    const token =
+      req.cookies.token ||
+      req.headers.authorization?.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({ msg: 'Unauthorized: No token', success: false });
     }
 
-    const authorized = jwt.verify(token, process.env.JWT_SECRET);
+    const authorized = jwt.verify(token, ENV.JWT_SECRET);
 
-    // Attach user info to req
     req.userId = authorized.id;
-    req.userRole = authorized.role || null; // role will be undefined/null for normal users if not included
+    req.userRole = authorized.role || null;
 
     next();
   } catch (error) {
@@ -24,6 +27,5 @@ export const authorizeAdmin = (req, res, next) => {
   if (req.userRole !== 'admin') {
     return res.status(403).json({ msg: 'Access denied. Admins only.', success: false });
   }
-  
   next();
 };
