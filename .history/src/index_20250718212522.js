@@ -18,7 +18,7 @@ import adminRoute from './routes/adminUser.route.js';
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/v1', testRoute);
+
 const corsOption = {
   origin: [
     'http://www.admireholidays.com',

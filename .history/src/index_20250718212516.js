@@ -3,7 +3,7 @@ import cors from 'cors';
 import { ENV } from './config/ENV.js';
 import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
-import testRoute from './routes/Test.route.js';
+import testRoute from './routes/test.route.js';
 
 import { globalErrorHandler } from './middleware/errorHandler.js';
 
@@ -18,7 +18,7 @@ import adminRoute from './routes/adminUser.route.js';
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/v1', testRoute);
+
 const corsOption = {
   origin: [
     'http://www.admireholidays.com',
