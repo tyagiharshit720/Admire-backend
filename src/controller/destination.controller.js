@@ -11,12 +11,10 @@ export const internationalDestinations = async (req, res) => {
     if (!internationalDestinations || internationalDestinations.length === 0) {
       return res.status(404).json({ msg: 'No international destinations found', success: false });
     }
-    return res
-      .status(200)
-      .json(internationalDestinations, {
-        msg: 'International destinations fetched successfully',
-        success: true,
-      });
+    return res.status(200).json(internationalDestinations, {
+      msg: 'International destinations fetched successfully',
+      success: true,
+    });
   } catch (error) {
     console.error('Error fetching international destinations:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -30,12 +28,10 @@ export const domesticDestinations = async (req, res) => {
     if (!domesticDestinations || domesticDestinations.length === 0) {
       return res.status(404).json({ msg: 'No domestic destinations found', success: false });
     }
-    return res
-      .status(200)
-      .json(domesticDestinations, {
-        msg: 'Domestic destinations fetched successfully',
-        success: true,
-      });
+    return res.status(200).json(domesticDestinations, {
+      msg: 'Domestic destinations fetched successfully',
+      success: true,
+    });
   } catch (error) {
     console.error('Error fetching domestic destinations:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -84,6 +80,9 @@ export const destinationIteneries = async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error', success: false });
   }
 };
+
+// Adding Destination Domestic or International Controller
+
 export const ourResorts = async (req, res) => {
   try {
     const resortsData = await resortModel.find({});

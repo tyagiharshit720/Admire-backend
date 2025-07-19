@@ -5,7 +5,10 @@ import {
   destinationIteneries,
   internationalDestinations,
   domesticDestinations,
+  // addDestination_Domestic_Internationl
+
 } from '../controller/destination.controller.js';
+import {auth} from "../middleware/auth.js"
 
 const destinationRoute = express.Router();
 
@@ -14,5 +17,6 @@ destinationRoute.get('/domestic-destinations', domesticDestinations);
 destinationRoute.get('/trending-destination', trendingDestination);
 destinationRoute.get('/trending-destination/:place', destinationIteneries);
 destinationRoute.get('/resorts', ourResorts);
+// destinationRoute.post('/new-destination',auth,addDestination_Domestic_Internationl)
 
 export default destinationRoute;

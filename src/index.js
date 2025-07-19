@@ -8,7 +8,7 @@ import { globalErrorHandler } from './middleware/errorHandler.js';
 
 // routes imports
 import leadsRoute from './routes/leads.route.js';
-import itinerariesRoute from './routes/destination.route.js';
+import destinationRoute from './routes/destination.route.js';
 import blogRoute from './routes/blog.route.js';
 import testimonialRoute from './routes/testimonial.route.js';
 import userRouter from './routes/user.route.js';
@@ -37,7 +37,7 @@ connectDB();
 
 // Middleware to log requests
 app.use('/api/v1/', leadsRoute);
-app.use('/api/v1/destination', itinerariesRoute);
+app.use('/api/v1/destination', destinationRoute);
 app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
 app.use('/api/v1/user', userRouter);
