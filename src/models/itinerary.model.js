@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 // Sub-schema for hotel details
 const hotelDetailSchema = new mongoose.Schema(
   {
-    type: String,
-    roomType: String,
-    price: String,
-    discount: String,
+    type: { type: String, trim: true },
+    roomType: { type: String, trim: true },
+    price: { type: String, trim: true },
+    discount: { type: String, trim: true },
   },
   { _id: false }
 );
@@ -14,8 +14,8 @@ const hotelDetailSchema = new mongoose.Schema(
 // Sub-schema for itinerary theme (value-label pairs)
 const labelValueSchema = new mongoose.Schema(
   {
-    value: { type: String, required: true },
-    label: { type: String, required: true },
+    value: { type: String, required: true, trim: true },
+    label: { type: String, required: true, trim: true },
   },
   { _id: false }
 );
@@ -23,86 +23,69 @@ const labelValueSchema = new mongoose.Schema(
 // Sub-schema for days information
 const dayInfoSchema = new mongoose.Schema(
   {
-    day: String,
-    locationName: String,
-    locationDetail: String,
+    day: { type: String, trim: true },
+    locationName: { type: String, trim: true },
+    locationDetail: { type: String, trim: true },
   },
   { _id: false }
 );
 
 const itinerarySchema = new mongoose.Schema(
   {
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
+    title: {
+      type: String,
       required: true,
-      ref: 'User', // assuming a User model exists
+      trim: true,
     },
-
-    title: { type: String, required: true },
-    meta_title: String,
-    keyword: String,
-    meta_description: String,
-
-    itinerary_visibility: {
+    travel_type: {
       type: String,
-      enum: ['public', 'private', 'draft'],
-      default: 'public',
+      enum: ['Domestic', 'International'],
+      required: true,
+      trim: true,
     },
-
-    itinerary_type: {
+    destination_name: {
       type: String,
-      enum: ['fixed', 'flexible'],
-      default: 'flexible',
+      required: true,
+      trim: true,
     },
-
-    duration: {
-      type: labelValueSchema,
-      default: undefined,
-    },
-
-    selected_destination: {
-      type: labelValueSchema,
-      default: undefined,
-    },
-
-    itinerary_theme: {
-      type: [labelValueSchema],
-      default: [],
-    },
-
-    days_information: {
-      type: [dayInfoSchema],
-      default: [],
-    },
-
-    hotel_details: {
-      type: [hotelDetailSchema],
-      default: [],
-    },
-
-    destination_detail: String,
-    inclusion: String,
-    exclusion: String,
-    terms_and_conditions: String,
-    pricing: String,
-
-    destination_thumbnail: String,
-
-    destination_images: {
+    destination_theme: {
       type: [String],
-      default: [],
+      required: true,
     },
-
-    created_at: {
-      type: Date,
-      default: Date.now,
+    destination_thumbnail: {
+      type: [String],
+      required: true,
     },
-    updated_at: {
-      type: Date,
-      default: Date.now,
+    duration: {
+      type: [dayInfoSchema],
+      required: true,
+    },
+    media: {
+      type: [String],
+      required: true,
+    },
+    inclusion: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    exclusion: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    terms_and_condition: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    payment_mode: {
+      type: String,
+      required: true,
+      trim: true,
     },
   },
-  { timestamps: false } // set to true if you want Mongoose to auto-manage timestamps
+  { timestamps: true }  // Track createdAt and updatedAt automatically
 );
 
 export default mongoose.model('ItineraryMain', itinerarySchema);

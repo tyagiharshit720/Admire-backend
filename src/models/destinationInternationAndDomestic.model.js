@@ -13,18 +13,9 @@ const DestinationInternationAndDomesticSchema = new mongoose.Schema(
 
     // ✅ New Fields
     terms_and_conditions: {
-      type: String,   // Or [String] if multiple
-      default: ''     // Optional: default value
+      type: String, // Or [String] if multiple
+      default: '', // Optional: default value
     },
-    cancellation_policy: {
-      type: String,
-      default: ''
-    },
-    payment_method: {
-      type: String,
-      default: ''
-    }
-
   },
   { timestamps: true }
 );

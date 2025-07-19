@@ -1,4 +1,5 @@
 import destinatinInternationAndDomestic from '../../models/destinationInternationAndDomestic.model.js';
+import { formatCountryName } from '../../utils.js';
 
 // For sendind name of place according to their type "Domestic/International"
 export const destination_Internation_Or_Domestic = async (req, res) => {
@@ -33,18 +34,19 @@ export const addDestination_Domestic_Internationl = async (req, res) => {
     if (!destination_name || !type) {
       return res.status(400).json({ msg: 'All the fields are required', success: false });
     }
-    const alreadyExists = await destinatinInternationAndDomestic.find({ destination_name });
+    const alreadyExists = await destinatinInternationAndDomestic.find({
+      destination_name: formatCountryName(destination_name),
+    });
     console.log(alreadyExists);
     if (alreadyExists.length > 0) {
       return res.status(409).json({ msg: 'The given destination already exists', success: false });
     }
-    const newDestination=new destinatinInternationAndDomestic({
-      domestic_or_international:type,
-      destination_name
-    })
+    const newDestination = new destinatinInternationAndDomestic({
+      domestic_or_international: formatCountryName(type),
+      destination_name: formatCountryName(destination_name),
+    });
     await newDestination.save();
-    return res.status(200).json({msg:"Destination created successfully", success:false});
-
+    return res.status(200).json({ msg: 'Destination created successfully', success: true });
   } catch (error) {
     console.log(`Add Destination and Domestic and Internationa ${error}`);
     return res.status(500).json({ msg: 'Server Error', success: false });
