@@ -15,6 +15,7 @@ import testimonialRoute from './routes/testimonial.route.js';
 import userRouter from './routes/user.route.js';
 import adminRoute from './routes/adminUser.route.js';
 import customerGalleryRoute from './routes/customerGallery.route.js';
+import heroSectionRoute from './routes/heroSection.route.js'
 
 const app = express();
 app.use(cookieParser());
@@ -44,6 +45,7 @@ app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/', customerGalleryRoute)
+app.use('/api/v1',heroSectionRoute)
 app.use('/admin',adminRoute)
 
 // Global error handler

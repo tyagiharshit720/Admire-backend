@@ -10,11 +10,9 @@ const DestinationInternationAndDomesticSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    // ✅ New Fields
-    terms_and_conditions: {
-      type: String, // Or [String] if multiple
-      default: '', // Optional: default value
+    destination_theme: {
+      type: [String],
+      required: true,
     },
   },
   { timestamps: true }

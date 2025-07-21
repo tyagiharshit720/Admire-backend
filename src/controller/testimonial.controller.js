@@ -16,25 +16,3 @@ export const testimonal = async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error', success: false });
   }
 };
-export const postTestimonial = async (req, res) => {
-  try {
-    const { title, visibility } = req.body;
-    if (!title) {
-      return res.status(400).json({ msg: 'information required', success: false });
-    }
-    const newTestimonial = new testimonialModel({
-      video_url: req.file.path,
-      title: title,
-      visibility: visibility,
-    });
-    await newTestimonial.save();
-    return res
-      .status(200)
-      .json(newTestimonial,{
-        msg: 'Your testimonial data  has been saved, Thank You for your valueable time',
-        success: true,
-      });
-  } catch (error) {
-    return res.status(500).json({ msg: 'Server error', success: false });
-  }
-};

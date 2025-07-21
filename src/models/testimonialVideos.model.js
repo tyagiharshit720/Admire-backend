@@ -16,6 +16,10 @@ const videoTestimonialSchema = new mongoose.Schema(
       enum: ['public', 'private'],
       default: 'public',
     },
+    location:{
+      type:String,
+      required:true
+    }
   },
   {
     timestamps: true
