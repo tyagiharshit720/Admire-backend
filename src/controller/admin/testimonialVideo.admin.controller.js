@@ -1,4 +1,5 @@
 import VideoTestimonialModel from '../../models/testimonialVideos.model.js';
+import { formatCountryName } from '../../utils.js';
 
 export const testimonialVideo = async (req, res) => {
   const { title, visibility, location } = req.body;
@@ -11,7 +12,7 @@ export const testimonialVideo = async (req, res) => {
     const newTestimonial = new VideoTestimonialModel({
       video_url: req.file.path,
       title,
-      visibility,
+      visibility:formatCountryName(visibility),
       location,
     });
     await newTestimonial.save();

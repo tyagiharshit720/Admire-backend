@@ -39,8 +39,8 @@ adminRoute.patch('/change-password', auth, changePassword);
 adminRoute.get('/get-admin-user', auth, authorizeAdmin, userExistedInAdmin);
 adminRoute.post('/customer-gallery', auth, uploadMedia.array('image'), customerGallery);
 adminRoute.post('/new-destination', auth, addDestination_Domestic_Internationl);
-adminRoute.get('/TAC/:destination', auth, getTNC);
-adminRoute.patch('/TAC', auth, TNC);
+adminRoute.get('/tnc/:id', auth, getTNC);
+adminRoute.patch('/tnc', auth, TNC);
 adminRoute.get('/payment-mode/:type', auth, getPaymentMethod);
 adminRoute.post('/payment-mode', auth, paymentMethod);
 adminRoute.get('/cancellation-policy', auth, getCancellationPolicy);
@@ -50,6 +50,6 @@ adminRoute.post('/itinerary',auth,uploadMedia.fields([
     { name: 'destination_images', maxCount: 10 },  // Handle up to 10 images
     { name: 'thumbnails', maxCount: 5 }            // Handle up to 5 thumbnails
   ]),createItinerary)
-  adminRoute.post('/hero-section',uploadMedia.single('image'),heroSection)
+  adminRoute.post('/hero-section',auth,uploadMedia.single('image'),heroSection)
 
 export default adminRoute;

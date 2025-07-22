@@ -2,15 +2,14 @@ import cancellationModel from '../../models/cancellationPolicy.model.js';
 
 // Get Cancellation Policy
 export const getCancellationPolicy = async (req, res) => {
-  console.log(req)
+  // console.log(req)
   try {
     const policy = await cancellationModel.findOne();
-    console.log(policy)
+    // console.log(policy)
 
     if (!policy) {
       return res.status(404).json({ success: false, msg: 'Cancellation policy not found' });
     }
-    
 
     res.status(200).json({
       success: true,
@@ -22,7 +21,7 @@ export const getCancellationPolicy = async (req, res) => {
   }
 };
 
-// Update Cancellation Policy 
+// Update Cancellation Policy
 export const updateCancellationPolicy = async (req, res) => {
   try {
     const { cancellation_policy } = req.body;

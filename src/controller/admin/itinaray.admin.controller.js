@@ -81,7 +81,7 @@ export const createItinerary = async (req, res) => {
 
 export const getAllItinarary = async (req, res) => {
   try {
-
+    
   } catch (error) {
     console.log(`Get Itinarary `);
   }

@@ -8,7 +8,7 @@ export const getCustomerGallery = async (req, res) => {
         .status(409)
         .json({ msg: 'customerGalleery is Empty or try again later', success: false });
     }
-    console.log(customerGalleryData);
+    // console.log(customerGalleryData);
     return res
       .status(200)
       .json({ msg: 'Customer Gallery Fetched Succesfully', success: true, customerGalleryData });

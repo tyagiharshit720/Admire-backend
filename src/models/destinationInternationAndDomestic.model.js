@@ -10,10 +10,6 @@ const DestinationInternationAndDomesticSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    destination_theme: {
-      type: [String],
-      required: true,
-    },
   },
   { timestamps: true }
 );

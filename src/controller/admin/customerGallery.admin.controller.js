@@ -10,7 +10,7 @@ export const customerGallery = async (req, res) => {
     const galleryDB = await customerGalleryModel.findOne();
     if (!galleryDB) {
       const newGallery = new customerGalleryModel({
-        image: [imagesPath],
+        image: imagesPath,
       });
       await newGallery.save();
       return res.status(200).json({ msg: 'images uploaded Successfully', success: true });

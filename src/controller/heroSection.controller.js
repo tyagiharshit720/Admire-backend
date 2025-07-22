@@ -11,7 +11,8 @@ export const getHeroSectionVideo=async(req,res)=>{
     if(!heroSectionData){
         return res.status(409).json({msg:"Video wont find for the specific title", success:false});
     }
-    return res.status(200).json({msg:"Successfully fetched", success:true, heroSectionData});
+    const publicUrl=heroSectionData.video_url.filter((video)=>video.visibility === 'Public').map((video)=>video.url);
+    return res.status(200).json({msg:"Successfully fetched", success:true, publicUrl});
   }
   catch(error){
 

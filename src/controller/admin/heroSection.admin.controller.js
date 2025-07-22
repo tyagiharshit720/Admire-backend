@@ -3,19 +3,32 @@ import { formatCountryName } from '../../utils.js';
 
 export const heroSection = async (req, res) => {
   try {
-    const { title } = req.body;
-    if (!title) {
+    const { title, visibility } = req.body;
+    if (!title || !visibility) {
       return res.status(400).json({ msg: 'Title Field Required', success: false });
     }
-    const titleAlreadyExists = await heroSectionVideoModel.findOne({ title:formatCountryName(title) });
+    const titleAlreadyExists = await heroSectionVideoModel.findOne({
+      title: formatCountryName(title),
+    });
     if (titleAlreadyExists) {
-      titleAlreadyExists.video_url = req.file.path;
+      titleAlreadyExists.video_url = [
+        ...titleAlreadyExists.video_url,
+        {
+          url: req.file.path,
+          visibility:formatCountryName(visibility),
+        },
+      ];
       await titleAlreadyExists.save();
       return res.status(200).json({ msg: 'Hero video saved', success: true, titleAlreadyExists });
     }
     const newHeroVideo = new heroSectionVideoModel({
       title: formatCountryName(title),
-      video_url: req.file.path,
+      video_url: [
+        {
+          url: req.file.path,
+          visibility:formatCountryName(visibility),
+        },
+      ],
     });
     await newHeroVideo.save();
     return res.status(200).json({ msg: 'Hero video saved', success: true, newHeroVideo });
