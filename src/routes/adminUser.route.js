@@ -33,6 +33,7 @@ import {
   getSuggestions,
 } from '../controller/admin/leads.admin.controller.js';
 import { createCity, getCity } from '../controller/admin/cities.admin.controller.js';
+import {postBlog, getBlog} from '../controller/admin/Blog.admin.controller.js'
 
 const adminRoute = express.Router();
 
@@ -62,5 +63,7 @@ adminRoute.get('/get-subscribe', auth, getSubscribe);
 adminRoute.get('/get-suggestions', auth, getSuggestions);
 adminRoute.post('/city', auth, uploadMedia.single('image'), createCity);
 adminRoute.get('/city/:destinationId', auth, getCity);
+adminRoute.post('/blog',uploadMedia.single('coverImage'), postBlog);
+adminRoute.get('/blog',auth,getBlog)
 
 export default adminRoute;
