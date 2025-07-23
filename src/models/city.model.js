@@ -4,7 +4,8 @@ import mongoose from 'mongoose'
 const citySchema=new mongoose.Schema({
     city_name:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     city_category:{
         type:[String],
@@ -14,9 +15,9 @@ const citySchema=new mongoose.Schema({
         type:[String],
         required:true
     },
-    visibiliy:{
+    visibility:{
        type:String,
-       enum:['public', 'private'],
+       enum:['Public', 'Private'],
        required:true
     },
     state:{
@@ -24,3 +25,6 @@ const citySchema=new mongoose.Schema({
         ref:'DestinationInternationAndDomestic'
     }
 },{timestamps:true})
+
+const cityModel=mongoose.model('city',citySchema);
+export default cityModel

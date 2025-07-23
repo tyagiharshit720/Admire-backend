@@ -1,3 +1,4 @@
+import {validateResult} from '../middleware/validateResult.js'
 export const validate = (req, res, next) => {
   const errors = validateResult(req);
   if (errors) {

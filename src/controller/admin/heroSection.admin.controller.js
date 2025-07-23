@@ -2,9 +2,12 @@ import heroSectionVideoModel from '../../models/heroSection.model.js';
 import { formatCountryName } from '../../utils.js';
 
 export const heroSection = async (req, res) => {
+  console.log(req)
+  console.log(req.file.path);
   try {
     const { title, visibility } = req.body;
-    if (!title || !visibility) {
+    
+    if (!title) {
       return res.status(400).json({ msg: 'Title Field Required', success: false });
     }
     const titleAlreadyExists = await heroSectionVideoModel.findOne({

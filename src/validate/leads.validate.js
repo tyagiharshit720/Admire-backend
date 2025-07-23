@@ -12,6 +12,7 @@ export const contactValidator = [
   body('name').trim().notEmpty().withMessage('Name is required'),
   body('email').trim().isEmail().withMessage('Valid email is required'),
   body('message').trim().notEmpty().withMessage('Message is required'),
+  body('phone').trim().notEmpty().withMessage('Mobile Number is required'),
   body('subject').trim().notEmpty().withMessage('Subject is required'),
 ];
 

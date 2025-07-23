@@ -24,8 +24,16 @@ import {
   getCancellationPolicy,
 } from '../controller/admin/cancellation.admin.controller.js';
 import { testimonialVideo } from '../controller/admin/testimonialVideo.admin.controller.js';
-import {createItinerary} from '../controller/admin/itinaray.admin.controller.js'
+import { createItinerary } from '../controller/admin/itinaray.admin.controller.js';
 import { heroSection } from '../controller/admin/heroSection.admin.controller.js';
+import {
+  getPlanYourJourney,
+  getContact,
+  getSubscribe,
+  getSuggestions,
+} from '../controller/admin/leads.admin.controller.js';
+import { createCity, getCity } from '../controller/admin/cities.admin.controller.js';
+
 const adminRoute = express.Router();
 
 adminRoute.post('/add-user', auth, authorizeAdmin, AdminUserCreate);
@@ -46,10 +54,13 @@ adminRoute.post('/payment-mode', auth, paymentMethod);
 adminRoute.get('/cancellation-policy', auth, getCancellationPolicy);
 adminRoute.put('/cancellation-policy', auth, updateCancellationPolicy);
 adminRoute.post('/testimonial-video', auth, uploadMedia.single('image'), testimonialVideo);
-adminRoute.post('/itinerary',auth,uploadMedia.fields([
-    { name: 'destination_images', maxCount: 10 },  // Handle up to 10 images
-    { name: 'thumbnails', maxCount: 5 }            // Handle up to 5 thumbnails
-  ]),createItinerary)
-  adminRoute.post('/hero-section',auth,uploadMedia.single('image'),heroSection)
+adminRoute.post('/itinerary', auth, uploadMedia.single('image'), createItinerary);
+adminRoute.post('/hero-section', auth, uploadMedia.single('image'), heroSection);
+adminRoute.get('/plan-your-journey', auth, getPlanYourJourney);
+adminRoute.get('/get-contact', auth, getContact);
+adminRoute.get('/get-subscribe', auth, getSubscribe);
+adminRoute.get('/get-suggestions', auth, getSuggestions);
+adminRoute.post('/city', auth, uploadMedia.single('image'), createCity);
+adminRoute.get('/city/:destinationId', auth, getCity);
 
 export default adminRoute;

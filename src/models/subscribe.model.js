@@ -13,7 +13,7 @@ const subscribeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+},{timestamps:true});
 
 const subscribeModel = mongoose.model('subscribeSchema', subscribeSchema);
 

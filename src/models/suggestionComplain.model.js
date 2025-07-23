@@ -13,7 +13,7 @@ const suggestionComplain = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+},{timestamps:true});
 const suggestionComplainModel = mongoose.model('suggestionComplain', suggestionComplain);
 
 export default suggestionComplainModel;

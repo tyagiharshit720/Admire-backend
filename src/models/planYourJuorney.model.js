@@ -17,7 +17,7 @@ const planYourJourneySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+},{timestamps:true});
 
 const PlanYourJourney = mongoose.model('PlanYourJourney', planYourJourneySchema);
 

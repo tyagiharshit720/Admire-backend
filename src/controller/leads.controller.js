@@ -32,7 +32,7 @@ export const planYourJourney = async (req, res) => {
 
 // conatct controller
 export const contact = async (req, res) => {
-  const { name, email, subject, message } = req.body;
+  const { name, email,phone, subject, message } = req.body;
   // console.log(req.body)
   try {
     const newContcat = new contactModel({
@@ -40,6 +40,7 @@ export const contact = async (req, res) => {
       email,
       subject,
       message,
+      phone_no:phone
     });
     await newContcat.save();
 
