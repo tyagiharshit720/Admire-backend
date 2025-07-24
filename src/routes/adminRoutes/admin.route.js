@@ -9,6 +9,7 @@ import {
   userExistedInAdmin,
   getMe,
   logout,
+   deleteUser
 } from '../../controller/admin/user.admin.controller.js';
 import { customerGallery } from '../../controller/admin/customerGallery.admin.controller.js';
 import { destination_Internation_Or_Domestic } from '../../controller/admin/destination.admin.controller.js';
@@ -45,6 +46,7 @@ adminRoute.patch('/change-password', auth, authorizeAdmin, changePassword);
 // Admin only section no user acccess
 adminRoute.post('/add-user', auth, authorizeAdmin, AdminUserCreate);
 adminRoute.get('/get-admin-user', auth, authorizeAdmin, userExistedInAdmin);
+adminRoute.delete('/delete-user/:userId',auth, authorizeAdmin,deleteUser)
 
 // Image Gallery Section
 adminRoute.post('/image-Gallery', auth, uploadMedia.array('image'), imageGallery);

@@ -154,13 +154,35 @@ export const logout = async (req, res) => {
     res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
+      sameSite: 'lax',
     });
 
-    return res.status(200).json({ msg: "Logout successful", success: true });
-
+    return res.status(200).json({ msg: 'Logout successful', success: true });
   } catch (error) {
     console.log(`Logout Error -> ${error}`);
-    return res.status(500).json({ msg: "Server Error", success: false });
+    return res.status(500).json({ msg: 'Server Error', success: false });
+  }
+};
+
+// Delete admin user *Done only by Admin*
+
+export const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+  // console.log(userId);
+  try {
+    const userData = await AdminUserModel.findById(userId);
+    if (!userData) {
+      return res
+        .status(404)
+        .json({ msg: 'User Which u wanted to delete does not exists', success: false });
+    }
+    if (userData.role === 'admin') {
+      return res.status(403).json({ msg: 'You cannnot delete Admin itself', success: false });
+    }
+    await AdminUserModel.findOneAndDelete({ _id: userId });
+    return res.status(200).json({ msg: 'User Deleted Successfully', success: true });
+  } catch (error) {
+    console.log(`Delete User -> ${error}`);
+    return res.status(500).json({ msg: 'Server Error', success: false });
   }
 };
