@@ -3,7 +3,7 @@ import { formatCountryName } from '../../utils.js';
 
 export const postBlog=async(req,res)=>{
     const {title,content,visibility}=req.body
-    console.log(title,content,visibility);
+    // console.log(title,content,visibility);
     try{
       if(!title || !content || !visibility){
         return res.status(400).json({msg:"All the fileds are required", success:false});

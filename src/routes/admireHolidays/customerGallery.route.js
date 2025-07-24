@@ -1,5 +1,5 @@
 import express from "express";
-import {getCustomerGallery} from "../controller/customerGallery.controller.js"
+import {getCustomerGallery} from "../../controller/customerGallery.controller.js"
 
 const customerGalleryRoute=express.Router();
 

@@ -1,5 +1,5 @@
 import express from 'express'
-import { sendOtp, verifyOtp } from '../controller/user.controller.js';
+import { sendOtp, verifyOtp } from '../../controller/user.controller.js';
 const userRouter=express.Router();
 
 userRouter.post('/send-otp', sendOtp)

@@ -51,8 +51,8 @@ export const createItinerary = async (req, res) => {
 
     // Destination video URL from Cloudinary upload
     const destination_video = req.file?.path;
-    console.log(req.file);
-    console.log(destination_video);
+    // console.log(req.file);
+    // console.log(destination_video);
 
     // Validate required fields
     if (

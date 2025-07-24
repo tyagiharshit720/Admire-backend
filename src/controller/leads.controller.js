@@ -63,7 +63,7 @@ export const contact = async (req, res) => {
 
 export const subscribe = async (req, res) => {
   const { name, phone, email } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const newSubscribe = new subscribeModel({
       name,

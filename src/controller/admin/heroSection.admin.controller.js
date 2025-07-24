@@ -2,8 +2,8 @@ import heroSectionVideoModel from '../../models/heroSection.model.js';
 import { formatCountryName } from '../../utils.js';
 
 export const heroSection = async (req, res) => {
-  console.log(req)
-  console.log(req.file.path);
+  // console.log(req)
+  // console.log(req.file.path);
   try {
     const { title, visibility } = req.body;
     

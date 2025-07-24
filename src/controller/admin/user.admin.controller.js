@@ -19,7 +19,7 @@ import { generateToken } from '../../utils.js';
 export const AdminUserVerify = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
+    // console.log(username, password);
     if (!username || !password) {
       return res.status(400).json({ msg: 'username or password required', success: false });
     }
@@ -27,9 +27,9 @@ export const AdminUserVerify = async (req, res) => {
     if (!isUserExists) {
       return res.status(400).json({ msg: 'User does not exists', success: false });
     }
-    console.log(isUserExists.password);
+    // console.log(isUserExists.password);
     const matchedPaswword = await bcrypt.compare(password, isUserExists.password);
-    console.log(matchedPaswword);
+    // console.log(matchedPaswword);
     if (!matchedPaswword) {
       return res.status(401).json({ msg: 'Incorrect Password', success: false });
     }

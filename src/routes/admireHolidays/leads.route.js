@@ -24,20 +24,20 @@ router.post('/suggestionComplain', suggestionComplainValidator, validate, sugges
 
 export default router;*/
 import express from 'express';
-import { validate } from '../middleware/validator.js'; // ✅ Use only this
+import { validate } from '../../middleware/validator.js'; // ✅ Use only this
 import {
   planYourJourney,
   contact,
   subscribe,
   suggestionComplain,
-} from '../controller/leads.controller.js';
+} from '../../controller/leads.controller.js';
 
 import {
   contactValidator,
   planYourJourneyValidator,
   subscribeValidator,
   suggestionComplainValidator,
-} from '../validate/leads.validate.js';
+} from '../../validate/leads.validate.js';
 
 const router = express.Router();
 

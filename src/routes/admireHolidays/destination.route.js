@@ -7,8 +7,8 @@ import {
   domesticDestinations,
   // addDestination_Domestic_Internationl
 
-} from '../controller/destination.controller.js';
-import {auth} from "../middleware/auth.js"
+} from '../../controller/destination.controller.js';
+
 
 const destinationRoute = express.Router();
 

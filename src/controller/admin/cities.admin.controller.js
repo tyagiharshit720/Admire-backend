@@ -42,7 +42,7 @@ export const createCity = async (req, res) => {
 
 export const getCity=async(req,res)=>{
   const {destinationId}=req.params
-  console.log(destinationId);
+  // console.log(destinationId);
   try{
      const objectId = new mongoose.Types.ObjectId(destinationId);
     const citiesData=await cityModel.find({state:objectId});

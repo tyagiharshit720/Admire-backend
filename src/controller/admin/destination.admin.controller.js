@@ -31,7 +31,7 @@ export const destination_Internation_Or_Domestic = async (req, res) => {
 export const addDestination_Domestic_Internationl = async (req, res) => {
   try {
     const { destination_name, type, destination_theme } = req.body;
-    console.log(destination_name, destination_theme, type);
+    // console.log(destination_name, destination_theme, type);
     if (!destination_name || !type || !destination_theme) {
       return res.status(400).json({ msg: 'All the fields are required', success: false });
     }

@@ -49,7 +49,7 @@ export const getImageForPlace = async (req, res) => {
     const imageGalleryData = await imageGalleryModel.findOne({
       destination_name: formatCountryName(destination_name),
     });
-    console.log(imageGalleryData);
+    // console.log(imageGalleryData);
     if (!imageGalleryData) {
       return res
         .status(409)

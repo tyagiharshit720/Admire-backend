@@ -33,7 +33,7 @@ export const sendOtp = async (req, res) => {
       await user.save();
     }
 
-    console.log(`OTP for ${mobile_number}: ${otp}`); // Replace with SMS API in production
+    // console.log(`OTP for ${mobile_number}: ${otp}`); // Replace with SMS API in production
 
     return res.status(200).json({ msg: 'OTP sent successfully', success: true });
   } catch (error) {

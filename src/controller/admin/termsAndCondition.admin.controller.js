@@ -4,7 +4,7 @@ import DestinationInternationAndDomesticModel from '../../models/destinationInte
 // Controller function to get terms and conditions
 export const getTNC = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
 
   try {
     const tnc = await termsAndConditionModel

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { testimonal } from '../controller/testimonial.controller.js';
+import { testimonal } from '../../controller/testimonial.controller.js';
 
 const testimonialRoute = express.Router();
 

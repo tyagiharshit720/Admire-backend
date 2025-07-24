@@ -8,14 +8,14 @@ import testRoute from './routes/Test.route.js';
 import { globalErrorHandler } from './middleware/errorHandler.js';
 
 // routes imports
-import leadsRoute from './routes/leads.route.js';
-import destinationRoute from './routes/destination.route.js';
-import blogRoute from './routes/blog.route.js';
-import testimonialRoute from './routes/testimonial.route.js';
-import userRouter from './routes/user.route.js';
-import adminRoute from './routes/adminUser.route.js';
-import customerGalleryRoute from './routes/customerGallery.route.js';
-import heroSectionRoute from './routes/heroSection.route.js'
+import leadsRoute from './routes/admireHolidays/leads.route.js';
+import destinationRoute from './routes/admireHolidays/destination.route.js';
+import blogRoute from './routes/admireHolidays/blog.route.js';
+import testimonialRoute from './routes/admireHolidays/testimonial.route.js';
+import userRouter from './routes/admireHolidays/user.route.js';
+import adminRoute from './routes/adminRoutes/admin.route.js';
+import customerGalleryRoute from './routes/admireHolidays/customerGallery.route.js';
+import heroSectionRoute from './routes/admireHolidays/heroSection.route.js';
 
 const app = express();
 app.use(cookieParser());
@@ -29,7 +29,7 @@ const corsOption = {
     'http://localhost:3000',
     'http://192.168.68.114:3000',
     'https://admire-dashboard-frontend.vercel.app',
-    'https://admin.admireholidays.com'
+    'https://admin.admireholidays.com',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -46,9 +46,9 @@ app.use('/api/v1/destination', destinationRoute);
 app.use('/api/v1/blog', blogRoute);
 app.use('/api/v1/', testimonialRoute);
 app.use('/api/v1/user', userRouter);
-app.use('/api/v1/', customerGalleryRoute)
-app.use('/api/v1',heroSectionRoute)
-app.use('/admin',adminRoute)
+app.use('/api/v1/', customerGalleryRoute);
+app.use('/api/v1', heroSectionRoute);
+app.use('/admin', adminRoute);
 
 // Global error handler
 app.use(globalErrorHandler);
