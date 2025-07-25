@@ -10,12 +10,12 @@ export const getTNC = async (req, res) => {
     const tnc = await termsAndConditionModel
       .findOne({ destination_name: id })
       .populate('destination_name');
-    console.log(tnc);
+    // console.log(tnc);
 
     if (!tnc) {
       return res.status(404).json({ msg: 'Destination not found', success: false });
     }
-    console.log(tnc);
+    // console.log(tnc);
 
     return res.status(200).json({
       msg: 'Fetched terms and conditions',
@@ -29,7 +29,7 @@ export const getTNC = async (req, res) => {
 };
 
 // Post Terms and Condition (Correct Method)
-export const  TNC = async (req, res) => {
+export const TNC = async (req, res) => {
   const { id, terms_and_conditions } = req.body;
 
   if (!id || !terms_and_conditions) {

@@ -15,7 +15,7 @@ const itineraryAdminUserScheam = new mongoose.Schema({
     enum: ['admin', 'user'],
     default:'user'
   },
-});
+},{timestamps:true});
 
 const itineraryAdminUserModel = mongoose.model('itineraryAdminUser', itineraryAdminUserScheam);
 

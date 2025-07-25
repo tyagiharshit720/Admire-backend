@@ -2,38 +2,41 @@ import imageGalleryModel from '../../models/imageGallery.model.js';
 import { formatCountryName } from '../../utils.js';
 
 // posting image on image Gallery
-export const imageGallery = async (req, res) => {
+// adjust path if needed
+
+export const postImageGallery = async (req, res) => {
   try {
-    const { destination, termsAndCondition } = req.body;
-    if (!destination) {
-      return res.status(400).json({ msg: 'fields required', success: false });
+    const { destination_id } = req.body;
+
+    if (!destination_id) {
+      return res.status(400).json({ msg: 'Destination ID is required', success: false });
     }
 
-    const filePath = req.files.map((files) => files.path);
-    // console.log(filePath);
-    const isdestinationExists = await imageGalleryModel.findOne({
-      destination_name: formatCountryName(destination),
-    });
-    // console.log(isdestinationExists);
-    if (isdestinationExists) {
-      isdestinationExists.image = [...isdestinationExists.image, ...filePath];
-      if (termsAndCondition) {
-        isdestinationExists.termsAndCondition = termsAndCondition;
-      }
-      await isdestinationExists.save();
-      return res.status(200).json({ msg: 'images are uploaded successfully', success: true });
+    const filePaths = req.files?.map((file) => file.path) || [];
+
+    const existingGallery = await imageGalleryModel.findOne({ destination_id });
+
+    if (existingGallery) {
+      existingGallery.image.push(...filePaths);
+      await existingGallery.save();
+      return res.status(200).json({
+        msg: 'Images uploaded successfully and gallery updated',
+        success: true,
+      });
     }
 
     const newImageGallery = new imageGalleryModel({
-      destination_name: formatCountryName(destination),
-      image: filePath,
-      termsAndCondition,
+      destination_id,
+      image: filePaths,
     });
 
     await newImageGallery.save();
-    return res.status(200).json({ msg: 'Image uploaded successfully', success: true });
+    return res.status(201).json({
+      msg: 'Image gallery created and images uploaded successfully',
+      success: true,
+    });
   } catch (error) {
-    console.log(`Image Gallery -> ${error}`);
+    console.error(`Image Gallery Error: ${error}`);
     return res.status(500).json({ msg: 'Server Error', success: false });
   }
 };
@@ -41,29 +44,45 @@ export const imageGallery = async (req, res) => {
 // Getting image using name on place
 
 export const getImageForPlace = async (req, res) => {
-  const { destination_name } = req.params;
+  const { destination_id } = req.params;
   try {
-    if (!destination_name) {
+    if (!destination_id) {
       return res.status(400).json({ msg: 'destination name is rqeuired', success: false });
     }
-    const imageGalleryData = await imageGalleryModel.findOne({
-      destination_name: formatCountryName(destination_name),
-    });
+    const imageGalleryData = await imageGalleryModel
+      .findOne({
+        destination_id,
+      })
+      .populate('destination_id');
     // console.log(imageGalleryData);
     if (!imageGalleryData) {
       return res
-        .status(409)
+        .status(404)
         .json({ msg: 'The image for the given destination not found', success: false });
     }
-    return res
-      .status(200)
-      .json({
-        msg: 'Image for the destination found successfully',
-        success: true,
-        imageGalleryData,
-      });
+    return res.status(200).json({
+      msg: 'Image for the destination found successfully',
+      success: true,
+      imageGalleryData,
+    });
   } catch (error) {
     console.log(`Post payment method Error ${error}`);
     return res.status(500).json({ msg: 'Server Error', success: false });
   }
 };
+
+// Getting All the Image of Gallery
+// export const getAllImage = async (req, res) => {
+//   try {
+//     const imageData = await imageGalleryModel.find().sort({ createdAt: -1 });
+//     if (!imageData || imageData.length === 0) {
+//       return res.status(404).json({ msg: 'Image Gallery is Empty', success: false });
+//     }
+//     return res
+//       .status(200)
+//       .json({ msg: 'Image Gallery SuccessFully Fetched', success: true, imageData });
+//   } catch (error) {
+//     console.log(`Get Image Gallery error -> ${error}`);
+//     return res.status(500).json({ msg: 'Server Error', success: false });
+//   }
+// };
