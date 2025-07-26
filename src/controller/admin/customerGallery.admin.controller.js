@@ -71,7 +71,7 @@ export const deleteCustomerGalleryImage = async (req, res) => {
         msg: 'At least one image must be selected',
         success: false,
       });
-    }
+    } 
 
     // Get the single gallery document
     const gallery = await customerGalleryModel.findOne();
