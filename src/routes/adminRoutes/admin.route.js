@@ -32,18 +32,21 @@ import {
 } from '../../controller/admin/cancellation.admin.controller.js';
 import { testimonialVideo } from '../../controller/admin/testimonialVideo.admin.controller.js';
 import { createItinerary } from '../../controller/admin/itinaray.admin.controller.js';
+
 import {
   heroSection,
   getAllHeroVideo,
   updateHeroVideo,
   deleteHeroVideo,
 } from '../../controller/admin/heroSection.admin.controller.js';
+
 import {
   getPlanYourJourney,
   getContact,
   getSubscribe,
   getSuggestions,
 } from '../../controller/admin/leads.admin.controller.js';
+
 import {
   createCity,
   getStateCity,
@@ -56,6 +59,7 @@ import {
   deleteBlog,
   getSingleBlog,
 } from '../../controller/admin/Blog.admin.controller.js';
+
 
 const adminRoute = express.Router();
 
@@ -81,7 +85,9 @@ adminRoute.post('/new-destination', auth, addDestination_Domestic_Internationl);
 adminRoute.post('/itinerary', auth, uploadMedia.single('image'), createItinerary);
 adminRoute.post('/city', auth, uploadMedia.single('image'), createCity);
 adminRoute.get('/state/:destinationId', auth, getStateCity);
+
 adminRoute.get('/city/:cityId', auth, getCity);
+
 
 // Terms And Conditions Section
 adminRoute.get('/tnc/:id', auth, getTNC);
@@ -105,9 +111,11 @@ adminRoute.post('/testimonial-video', auth, uploadMedia.single('image'), testimo
 
 // Hero Section
 adminRoute.post('/hero-section', auth, uploadMedia.single('image'), heroSection);
+
 adminRoute.get('/hero-section/:page', auth, getAllHeroVideo);
 adminRoute.patch('/hero-section/:videoId', auth, updateHeroVideo);
 adminRoute.delete('/hero-section/:videoId', auth, authorizeAdmin,uploadMedia.single('image'), deleteHeroVideo);
+
 
 // Leads Section
 adminRoute.get('/plan-your-journey', auth, getPlanYourJourney);
@@ -116,10 +124,12 @@ adminRoute.get('/get-subscribe', auth, getSubscribe);
 adminRoute.get('/get-suggestions', auth, getSuggestions);
 
 //Blog Section
+
 adminRoute.post('/blog', auth, uploadMedia.single('coverImage'), postBlog);
 adminRoute.get('/blog', auth, getBlog);
 adminRoute.get('/blog/:blogId', auth, getSingleBlog);
 adminRoute.patch('/blog/:blogId', auth, uploadMedia.single('coverImage'), updateBlog);
 adminRoute.delete('/blog/:blogId', auth, authorizeAdmin, deleteBlog);
+
 
 export default adminRoute;

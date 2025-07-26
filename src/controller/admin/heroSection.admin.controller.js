@@ -7,7 +7,12 @@ export const heroSection = async (req, res) => {
   // console.log(req.file.path);
   try {
     const { title, visibility } = req.body;
+
     console.log(title, visibility);
+
+
+    
+    
 
     if (!title) {
       return res.status(400).json({ msg: 'Title Field Required', success: false });
@@ -44,6 +49,7 @@ export const heroSection = async (req, res) => {
 };
 
 // Right Now it is geeting all the Hero video from the DataBase but in future if needed we optimize it
+
 export const getAllHeroVideo = async (req, res) => {
   const { page } = req.params;
   try {
@@ -130,3 +136,4 @@ export const deleteHeroVideo = async (req, res) => {
     return res.status(500).json({ msg: 'Server error', success: false });
   }
 };
+

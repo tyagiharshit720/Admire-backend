@@ -1,7 +1,9 @@
 
 
+
 import express from 'express';
 import { validate } from '../../middleware/validator.js'; // ✅ Use only this
+
 import {
   planYourJourney,
   contact,
@@ -16,19 +18,22 @@ import {
   suggestionComplainValidator,
 } from '../../validate/leads.validate.js';
 
-const router = express.Router();
+const leadsRoute = express.Router();
+
 
 // Add this test route
-router.get('/test', (req, res) => {
+leadsRoute.get('/test', (req, res) => {
   res.status(200).json({
     success: true,
     message: 'API is working fine 🎉'
   });
 });
 
-router.post('/planYourJourney', planYourJourneyValidator, validate, planYourJourney);
-router.post('/contact', contactValidator, validate, contact);
-router.post('/subscribe', subscribeValidator, validate, subscribe);
-router.post('/suggestionComplain', suggestionComplainValidator, validate, suggestionComplain);
 
-export default router;
+leadsRoute.post('/planYourJourney', planYourJourneyValidator, validate, planYourJourney);
+leadsRoute.post('/contact', contactValidator, validate, contact);
+leadsRoute.post('/subscribe', subscribeValidator, validate, subscribe);
+leadsRoute.post('/suggestionComplain', suggestionComplainValidator, validate, suggestionComplain);
+
+export default leadsRoute;
+

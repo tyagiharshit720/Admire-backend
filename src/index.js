@@ -8,7 +8,8 @@ import testRoute from './routes/Test.route.js';
 import { globalErrorHandler } from './middleware/errorHandler.js';
 
 // routes imports
-import leadsRoute from './routes/admireHolidays/leads.route.js';
+// import leadsRoute from './routes/admireHolidays/leads.route.js';
+import leadsRoute from './routes/admireHolidays/leads.route.js'
 import destinationRoute from './routes/admireHolidays/destination.route.js';
 import blogRoute from './routes/admireHolidays/blog.route.js';
 import testimonialRoute from './routes/admireHolidays/testimonial.route.js';
