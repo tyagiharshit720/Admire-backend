@@ -7,7 +7,7 @@ export const testimonal = async (req, res) => {
       return res.status(400).json({ msg: 'No testimonials found', success: false });
     }
     if (testimonalData) {
-      console.log(testimonalData)
+      // console.log(testimonalData)
       return res
         .status(200)
         .json({ msg: 'Testimonials fetched successfully', success: true, testimonalData });
