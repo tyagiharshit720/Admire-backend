@@ -43,7 +43,7 @@ connectDB();
 // Middleware to log requests
 app.use('/api/v1/', leadsRoute);
 app.use('/api/v1/destination', destinationRoute);
-app.use('/api/v1/blog', blogRoute);
+app.use('/api/v1', blogRoute);
 app.use('/api/v1/', testimonialRoute);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/', customerGalleryRoute);

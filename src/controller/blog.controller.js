@@ -1,7 +1,8 @@
 import blogModel from '../models/blog.model.js';
 export const getBlog = async (req, res) => {
   try {
-    const blogData = await blogModel.find();
+    const blogData = await blogModel.find({visibility:'Public'});
+    // console.log(blogData)
     if(!blogData || blogData.length === 0){
       return res.status(404).json({msg:"No Blogs Aialable", success:false});
     }

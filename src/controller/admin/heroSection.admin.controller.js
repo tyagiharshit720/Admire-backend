@@ -7,8 +7,8 @@ export const heroSection = async (req, res) => {
   // console.log(req.file.path);
   try {
     const { title, visibility } = req.body;
-    console.log(title,visibility)
-    
+    console.log(title, visibility);
+
     if (!title) {
       return res.status(400).json({ msg: 'Title Field Required', success: false });
     }
@@ -20,7 +20,7 @@ export const heroSection = async (req, res) => {
         ...titleAlreadyExists.video_url,
         {
           url: req.file.path,
-          visibility:formatCountryName(visibility),
+          visibility: formatCountryName(visibility),
         },
       ];
       await titleAlreadyExists.save();
@@ -31,7 +31,7 @@ export const heroSection = async (req, res) => {
       video_url: [
         {
           url: req.file.path,
-          visibility:formatCountryName(visibility),
+          visibility: formatCountryName(visibility),
         },
       ],
     });
@@ -44,55 +44,89 @@ export const heroSection = async (req, res) => {
 };
 
 // Right Now it is geeting all the Hero video from the DataBase but in future if needed we optimize it
-export const getAllHeroVideo=async(req,res)=>{
-  try{
-    const heroVideoData=await heroSectionVideoModel.find();
-    if(!heroVideoData || heroVideoData.length===0){
-      return res.status(404).json({msg:"No Data available", success:false});
+export const getAllHeroVideo = async (req, res) => {
+  const { page } = req.params;
+  try {
+    const heroVideoData = await heroSectionVideoModel.find({ title: formatCountryName(page) });
+    if (!heroVideoData || heroVideoData.length === 0) {
+      return res.status(404).json({ msg: 'No Data available', success: false });
     }
-    return res.status(200).json({msg:"Success Fatched", success:true, heroVideoData})
-  }
-  catch(error){
+    // console.log(heroVideoData)
+    return res.status(200).json({ msg: 'Success Fatched', success: true, heroVideoData });
+  } catch (error) {
     console.log(`Get All the Hero video error ${error}`);
-    return res.status(500).json({msg:"Server Error", success:false});
+    return res.status(500).json({ msg: 'Server Error', success: false });
   }
-}
+};
 
 // Update Hero Section Video
 
-export const updateHeroVideo=async(req,res)=>{
-  const {title, visibility}=req.body;
-  const {id}=req.params
-  try{
-    const HeroVideoData=await heroSectionVideoModel.findById(id);
-    if(!HeroVideoData){
-      return res.status(404).json({msg:"The Data wont exists ", success:false});
-    }
-    if(title){
-      HeroVideoData.title=title;
-    }
-    if(visibility){
-      HeroVideoData.video_url.visibility=formatCountryName(visibility);
-    }
-    if(req.file.path){
-      HeroVideoData.video_url.url=req.file.path
-    }
-    await HeroVideoData.save();
-    return res.statsu(200).json({msg:"Updated Successfully", success:false});
-  }
-  catch(error){
-    console.log(`Update Hero Video Error ${error}`)
-    return res.status(500).json({msg:"Server Error", success:false});
-  }
-}
+export const updateHeroVideo = async (req, res) => {
+  const { title } = req.body;
+  const { videoId } = req.params;
 
-export const deleteHeroVideo=async(req,res)=>{
-  const {id}=req.params;
-  try{
+  try {
+    const heroDoc = await heroSectionVideoModel.findOne({ title });
 
+    if (!heroDoc) {
+      return res.status(404).json({ msg: "The Data doesn't exist", success: false });
+    }
+
+    const videoItem = heroDoc.video_url.find((data) => data._id.toString() === videoId);
+
+    if (!videoItem) {
+      return res.status(404).json({ msg: 'Video not found', success: false });
+    }
+
+    // ✅ Toggle visibility
+    videoItem.visibility = videoItem.visibility === 'Public' ? 'Private' : 'Public';
+
+    await heroDoc.save();
+
+    return res.status(200).json({ msg: 'Visibility toggled successfully', success: true });
+  } catch (error) {
+    console.log(`Update Hero Video Error -> ${error}`);
+    return res.status(500).json({ msg: 'Server Error', success: false });
   }
-  catch(error){
-    console.log(`Delete Hero video Error ${error}`);
-    return res.status(500).json({msg:"Server error", success:false});
+};
+
+// Delete hero video 
+export const deleteHeroVideo = async (req, res) => {
+  // console.log(req.body)
+  const { title } = req.query;
+  const { videoId } = req.params;
+  console.log(videoId);
+  console.log(title);
+  
+  try {
+    if (!videoId || !title) {
+      return res
+        .status(400)
+        .json({ msg: 'Video needs to be selected for deletion', success: false });
+    }
+
+    // Find the document with given title
+    const heroDoc = await heroSectionVideoModel.findOne({ title: formatCountryName(title) });
+
+    if (!heroDoc) {
+      return res.status(404).json({ msg: 'Hero section not found', success: false });
+    }
+
+    // Check if video exists
+    const videoExists = heroDoc.video_url.some((video) => video._id.toString() === videoId);
+    if (!videoExists) {
+      return res.status(404).json({ msg: 'Video not found', success: false });
+    }
+
+    // Filter out the video
+    heroDoc.video_url = heroDoc.video_url.filter((video) => video._id.toString() !== videoId);
+
+    // Save the updated document
+    await heroDoc.save();
+
+    return res.status(200).json({ msg: 'Video deleted successfully', success: true });
+  } catch (error) {
+    console.log(`Delete Hero Video Error: ${error}`);
+    return res.status(500).json({ msg: 'Server error', success: false });
   }
-}
+};
