@@ -110,7 +110,7 @@ export const AdminUserCreate = async (req, res) => {
       role: 'user',
     });
     await newUser.save();
-    return res.status(200).json({ msg: 'user created successfull', msg: true });
+    return res.status(200).json({ msg: 'user created successfull', success: true });
   } catch (error) {
     console.error(`itinerary Admin user create -> ${error}`);
     return res.status(500).json({ msg: 'Server Error', success: false });

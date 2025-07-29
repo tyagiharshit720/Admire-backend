@@ -2,9 +2,17 @@ import itineraryModel from '../../models/itinerary.model.js';
 
 export const createItinerary = async (req, res) => {
   try {
+    // Utility to safely parse JSON
+    const parseJSON = (data) => {
+      try {
+        return JSON.parse(data);
+      } catch {
+        return data;
+      }
+    };
+
     const {
       title,
-      travel_type,
       itinerary_visibility,
       itinerary_type,
       cancellation_policy,
@@ -13,7 +21,6 @@ export const createItinerary = async (req, res) => {
       destination_detail,
       destination_images,
       destination_thumbnails,
-      discount,
       duration,
       exclusion,
       hotel_as_per_category,
@@ -21,121 +28,153 @@ export const createItinerary = async (req, res) => {
       itinerary_theme,
       payment_mode,
       pricing,
-      selected_destination,
+      selected_destination_id,
       terms_and_conditions,
     } = req.body;
 
-    console.log('Received Itinerary Data:', {
-      title,
-      travel_type,
-      itinerary_visibility,
-      itinerary_type,
-      cancellation_policy,
-      classification,
-      days_information,
-      destination_detail,
-      destination_images,
-      destination_thumbnails,
-      // destination_video,
-      discount,
-      duration,
-      exclusion,
-      hotel_as_per_category,
-      inclusion,
-      itinerary_theme,
-      payment_mode,
-      pricing,
-      selected_destination,
-      terms_and_conditions,
-    });
+    const parsedClassification = parseJSON(classification);
+    const parsedDaysInformation = parseJSON(days_information);
+    const parsedDestinationDetail = parseJSON(destination_detail);
+    const parsedDestinationImages = parseJSON(destination_images);
+    const parsedDestinationThumbnails = parseJSON(destination_thumbnails);
+    const parsedItineraryTheme = parseJSON(itinerary_theme);
+    const parsedPricing = parseJSON(pricing);
 
-    // Destination video URL from Cloudinary upload
-    const destination_video = req.file?.path;
-    // console.log(req.file);
-    // console.log(destination_video);
-
-    // Validate required fields
-    if (
-      !title ||
-      !travel_type ||
-      !itinerary_visibility ||
-      !itinerary_type ||
-      !cancellation_policy ||
-      !classification ||
-      !days_information ||
-      !destination_detail ||
-      !destination_images ||
-      !destination_thumbnails ||
-      !discount ||
-      !duration ||
-      !exclusion ||
-      !hotel_as_per_category ||
-      !inclusion ||
-      !itinerary_theme ||
-      !payment_mode ||
-      !pricing ||
-      !selected_destination ||
-      !terms_and_conditions
+    // Validate pricing format
+    let finalPricing;
+    if (typeof parsedPricing === 'string') {
+      if (parsedPricing !== 'As per the destination') {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid pricing format. Must be 'As per the destination' or pricing object.",
+        });
+      }
+      finalPricing = parsedPricing;
+    } else if (
+      typeof parsedPricing === 'object' &&
+      parsedPricing !== null &&
+      typeof parsedPricing.standard_price === 'number' &&
+      typeof parsedPricing.discounted_price === 'number'
     ) {
+      finalPricing = parsedPricing;
+    } else {
       return res.status(400).json({
         success: false,
-        msg: 'All required fields must be provided.',
+        message:
+          "Invalid pricing object. Must contain standard_price and discounted_price as numbers.",
       });
     }
 
-    const newItinerary = await itineraryModel.create({
+    const videoPath = req.file?.path || null;
+    console.log('Uploaded Video:', req.file);
+
+    const newItinerary = new itineraryModel({
       title,
-      travel_type,
       itinerary_visibility,
       itinerary_type,
       cancellation_policy,
-      classification: Array.isArray(classification) ? classification : [classification],
-      days_information: Array.isArray(days_information)
-        ? days_information
-        : JSON.parse(days_information),
-      destination_detail,
-      destination_images: Array.isArray(destination_images)
-        ? destination_images
-        : JSON.parse(destination_images),
-      destination_thumbnails: Array.isArray(destination_thumbnails)
-        ? destination_thumbnails
-        : JSON.parse(destination_thumbnails),
-      destination_video,
-      discount,
+      classification: parsedClassification,
+      days_information: parsedDaysInformation,
+      destination_detail: parsedDestinationDetail,
+      destination_images: parsedDestinationImages.map((image) => image?.url || image),
+      destination_thumbnails: parsedDestinationThumbnails.map((image) => image?.url || image),
+      destination_video: videoPath,
       duration,
       exclusion,
       hotel_as_per_category,
       inclusion,
-      itinerary_theme: Array.isArray(itinerary_theme) ? itinerary_theme : [itinerary_theme],
+      itinerary_theme: parsedItineraryTheme,
       payment_mode,
-      pricing,
-      selected_destination,
+      pricing: finalPricing,
+      selected_destination: selected_destination_id,
       terms_and_conditions,
     });
 
-    res.status(201).json({
+    const savedItinerary = await newItinerary.save();
+
+    return res.status(201).json({
       success: true,
-      msg: 'Itinerary created successfully.',
-      data: newItinerary,
+      message: 'Itinerary created successfully.',
+      data: savedItinerary,
     });
   } catch (error) {
-    console.error('Error creating itinerary:', error);
-    res.status(500).json({
+    console.error('Create Itinerary Error:', error);
+    return res.status(500).json({
       success: false,
-      msg: 'Server error while creating itinerary.',
+      message: 'Failed to create itinerary.',
       error: error.message,
     });
   }
 };
 
+
 export const getAllItinerary = async (req, res) => {
   try {
-    const data = await itineraryModel.find().sort({ createdAt: -1 });
-    res.status(200).json({ success: true, data });
+    const itineraries = await itineraryModel.find().populate('selected_destination').sort({ createdAt: -1 }); //find the itineraries according to the latest created date
+    console.log('Fetched Itineraries:', itineraries);
+    return res.status(200).json({
+      success: true,
+      data: itineraries,
+    });
   } catch (error) {
-    console.error('Get Itinerary error:', error);
-    res
-      .status(500)
-      .json({ success: false, msg: 'Failed to fetch itineraries', error: error.message });
+    console.error('Get All Itineraries Error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch itineraries.',
+      error: error.message,
+    });
   }
-};
+}
+
+export const getItineraryById = async (req, res) => {
+  try {
+    const {id } = req.params;
+    const itinerary = await itineraryModel.findById(itineraryId).populate('selected_destination');
+
+    if (!itinerary) {
+      return res.status(404).json({
+        success: false,
+        message: 'Itinerary not found.',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: itinerary,
+    });
+  } catch (error) {
+    console.error('Get Itinerary By ID Error:', error);
+    return res.status(500).json({
+      success: false,
+      msg: 'Failed to fetch itinerary.',
+      error: error.message,
+    });
+  }
+}
+
+export const deleteItinerary = async (req, res) => {
+  console.log('Delete Itinerary Request:', req.params);
+  try {
+    const {id } = req.params;
+    const deletedItinerary = await itineraryModel.findByIdAndDelete(id);
+
+    if (!deletedItinerary) {
+      return res.status(404).json({
+        success: false,
+        message: 'Itinerary not found.',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: 'Itinerary deleted successfully.',
+    });
+  } catch (error) {
+    console.error('Delete Itinerary Error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to delete itinerary.',
+      error: error.message,
+    });
+  }
+}

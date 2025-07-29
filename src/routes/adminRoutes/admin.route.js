@@ -31,7 +31,7 @@ import {
   getCancellationPolicy,
 } from '../../controller/admin/cancellation.admin.controller.js';
 import { testimonialVideo } from '../../controller/admin/testimonialVideo.admin.controller.js';
-import { createItinerary } from '../../controller/admin/itinaray.admin.controller.js';
+import { createItinerary, getAllItinerary, getItineraryById, deleteItinerary } from '../../controller/admin/itinaray.admin.controller.js';
 
 import {
   heroSection,
@@ -82,7 +82,15 @@ adminRoute.get('/image-Gallery/:destination_id', auth, getImageForPlace);
 // Destination Section
 adminRoute.get('/destination/:type', auth, destination_Internation_Or_Domestic);
 adminRoute.post('/new-destination', auth, addDestination_Domestic_Internationl);
-adminRoute.post('/itinerary', auth, uploadMedia.single('image'), createItinerary);
+adminRoute.post(
+  '/itinerary',
+  auth,
+  uploadMedia.single('video'), // ⬅️ only expecting one uploaded video
+  createItinerary
+);
+adminRoute.get('/itinerary', auth, getAllItinerary)
+adminRoute.get('/itinerary/:id', auth, getItineraryById);
+adminRoute.delete('/itinerary/:id', auth, authorizeAdmin, deleteItinerary);
 adminRoute.post('/city', auth, uploadMedia.single('image'), createCity);
 adminRoute.get('/state/:destinationId', auth, getStateCity);
 
@@ -104,7 +112,7 @@ adminRoute.put('/cancellation-policy', auth, updateCancellationPolicy);
 // Customer Gallery  Section
 adminRoute.post('/customer-gallery', auth, uploadMedia.array('image'), postCustomerGallery);
 adminRoute.get('/customer-gallery', auth, getAllCustomerGalleryImages);
-adminRoute.delete('/customer-gallery/delete', auth, authorizeAdmin, deleteCustomerGalleryImage);
+adminRoute.delete('/customer-gallery/delete', auth, deleteCustomerGalleryImage);
 
 // Testimonial Section
 adminRoute.post('/testimonial-video', auth, uploadMedia.single('image'), testimonialVideo);
