@@ -8,7 +8,6 @@ import testRoute from './routes/Test.route.js';
 import { globalErrorHandler } from './middleware/errorHandler.js';
 
 // routes imports
-// import leadsRoute from './routes/admireHolidays/leads.route.js';
 import leadsRoute from './routes/admireHolidays/leads.route.js';
 import destinationRoute from './routes/admireHolidays/destination.route.js';
 import blogRoute from './routes/admireHolidays/blog.route.js';
@@ -19,9 +18,11 @@ import customerGalleryRoute from './routes/admireHolidays/customerGallery.route.
 import heroSectionRoute from './routes/admireHolidays/heroSection.route.js';
 
 const app = express();
+
+// Middleware
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/v1', testRoute);
+
 const corsOption = {
   origin: [
     'http://www.admireholidays.com',
@@ -39,21 +40,29 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
+// Connect Database
 connectDB();
 
-// Middleware to log requests
-app.use('/api/v1/', leadsRoute);
+// Default Route (✅ fix for "Cannot GET /")
+app.get('/', (req, res) => {
+  res.send('Admire Holidays API is running ✅');
+});
+
+// Routes
+app.use('/api/v1', testRoute);
+app.use('/api/v1', leadsRoute);
 app.use('/api/v1/destination', destinationRoute);
 app.use('/api/v1', blogRoute);
-app.use('/api/v1/', testimonialRoute);
+app.use('/api/v1', testimonialRoute);
 app.use('/api/v1/user', userRouter);
-app.use('/api/v1/', customerGalleryRoute);
+app.use('/api/v1', customerGalleryRoute);
 app.use('/api/v1', heroSectionRoute);
 app.use('/admin', adminRoute);
 
-// Global error handler
+// Global Error Handler
 app.use(globalErrorHandler);
 
+// Start Server
 app.listen(ENV.PORT, () => {
-  console.log('Server is start ✅');
+  console.log(`🚀 Server running on port ${ENV.PORT}`);
 });
