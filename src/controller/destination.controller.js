@@ -106,12 +106,12 @@ export const getImageGalleryByType = async (req, res) => {
   const { type } = req.params;
 
   try {
-    const normalizedType = formatCountryName(type); // e.g., 'Domestic' or 'International'
+    const normalizedType = formatCountryName(type); // e.g., 'domestic' or 'international'
 
     const result = await imageGalleryModel.aggregate([
       {
         $lookup: {
-          from: 'destinationinternationanddomestics', // collection name (in lowercase and plural)
+          from: 'destinationinternationanddomestics',
           localField: 'destination_id',
           foreignField: '_id',
           as: 'destinationData',
@@ -126,9 +126,8 @@ export const getImageGalleryByType = async (req, res) => {
       {
         $match: {
           'destinationData.domestic_or_international': {
-            $regex: `^${normalizedType}$`,
-            $options: 'i',
-          }, // Match the type
+            $regex: `new RegExp(^${normalizedType}$, 'i')`, // Fixed regex syntax
+          },
         },
       },
       {
@@ -137,19 +136,28 @@ export const getImageGalleryByType = async (req, res) => {
           destination_id: 1,
           image: 1,
           destination_name: '$destinationData.destination_name',
-          destination_tye: '$destinationData.domestic_or_international',
+          destination_type: '$destinationData.domestic_or_international', // Fixed typo
         },
       },
     ]);
 
     if (!result || result.length === 0) {
-      return res.status(401).json({ success: false, message: 'No data available' });
+      return res.status(404).json({  // Changed from 401 to 404
+        success: false, 
+        message: `No ${type} destinations found`
+      });
     }
 
-    return res.status(200).json({ success: true, data: result });
+    return res.status(200).json({ 
+      success: true, 
+      data: result 
+    });
   } catch (error) {
     console.error('Error in getImageGalleryByType:', error);
-    res.status(500).json({ success: false, message: 'Server Error' });
+    res.status(500).json({ 
+      success: false, 
+      message: 'Internal Server Error' 
+    });
   }
 };
 
