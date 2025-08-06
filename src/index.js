@@ -32,7 +32,8 @@ const corsOption = {
     'http://192.168.68.114:3000',
     'https://admire-dashboard-frontend.vercel.app',
     'https://admin.admireholidays.com',
-    'https://admireholidays1.netlify.app'
+    'https://admireholidays1.netlify.app',
+    'https://admireholidays.com'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
